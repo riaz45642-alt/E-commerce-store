@@ -4,7 +4,6 @@ import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 const INK = "#0B0B0E";
 const PORCELAIN = "#F3EFE6";
 const GOLD = "#C9A227";
-const SAGE = "#7C8B72";
 
 const STYLE_OPTIONS = ["Casual", "Formal", "Streetwear", "Minimalist", "Bohemian", "Classic"];
 const COLOR_OPTIONS = [
