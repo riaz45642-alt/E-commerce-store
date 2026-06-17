@@ -5,7 +5,7 @@ import LandingPage from "./e-commerce-store/Landingpage";
 import AuthOnboarding from "./e-commerce-store/Authonboarding";
 import HomePage from "./e-commerce-store/Homepage";
 import CategoryPage from "./e-commerce-store/Category";
-import CheckDemo from "./pages/CheckDemo";
+import CheckDemo from "./e-commerce-store/CheckDemo";
 
 function Landing() {
   const navigate = useNavigate();

@@ -1,70 +1,101 @@
-# Getting Started with Create React App
+# Veyra — E-Commerce Store (Restructured)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Clean separation of frontend and backend concerns.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Project Structure
 
-### `npm start`
+```
+veyra-restructured/
+│
+├── frontend/                        ← React app (UI only)
+│   ├── public/
+│   ├── src/
+│   │   ├── App.js                   ← Routes only, no logic
+│   │   ├── styles/
+│   │   │   ├── tokens.js            ← Design tokens (colours, fonts)
+│   │   │   └── api.js               ← All HTTP calls live here
+│   │   ├── components/
+│   │   │   ├── Avatar.jsx           ← SVG avatar, UI only
+│   │   │   ├── BodyControls.jsx     ← Profile sliders/chips, UI only
+│   │   │   ├── ProductLinkForm.jsx  ← Link inputs, UI only
+│   │   │   └── ContactForm.jsx      ← NEW: contact / feedback form
+│   │   └── e-commerce-store/
+│   │       ├── Landingpage.js
+│   │       ├── Authonboarding.js
+│   │       ├── Homepage.js
+│   │       ├── Category.js
+│   │       └── CheckDemo.jsx        ← Moved here from /pages
+│   ├── package.json
+│   ├── tailwind.config.js
+│   └── postcss.config.js
+│
+└── backend/                         ← Express API (logic only)
+    ├── server.js                    ← Entry point, mounts all routes
+    ├── package.json
+    ├── contact.controller.js        ← NEW: contact form handler
+    ├── home/
+    │   ├── home.controller.js
+    │   └── home.routes.js
+    ├── landing/
+    │   ├── landing.controller.js
+    │   └── landing.routes.js
+    ├── auth/
+    │   ├── auth.controller.js
+    │   └── auth.routes.js
+    ├── styles/
+    │   └── styles.config.js         ← Backend style/config constants
+    └── demo/
+        ├── demo.controller.js
+        └── demo.routes.js
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## API Routes
 
-### `npm test`
+| Method | Path                          | Description                       |
+|--------|-------------------------------|-----------------------------------|
+| GET    | /api/home/categories          | Product categories list           |
+| GET    | /api/home/featured            | Featured products                 |
+| GET    | /api/landing/info             | Store name & tagline              |
+| POST   | /api/landing/cta-click        | Track CTA click events            |
+| POST   | /api/auth/signup              | Create account + preferences      |
+| POST   | /api/auth/login               | Login                             |
+| GET    | /api/auth/preferences/:email  | Get user style preferences        |
+| POST   | /api/demo/save-links          | Save product links to session     |
+| POST   | /api/demo/save-user-features  | Save body profile to session      |
+| GET    | /api/demo/demo-preview        | Get session + style advice        |
+| POST   | /api/contact/submit           | Submit contact / feedback form    |
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Setup
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Frontend
+```bash
+cd frontend
+npm install
+npm start
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Backend
+```bash
+cd backend
+npm install
+npm start
+# Runs on http://localhost:4000
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Set `REACT_APP_API_URL=http://localhost:4000` in `frontend/.env` for local development.
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Key Decisions
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **`frontend/src/styles/api.js`** — all `fetch()` calls live here. JSX components never call `fetch()` directly.
+- **`frontend/src/styles/tokens.js`** — single source of truth for colours and fonts.
+- **`CheckDemo.jsx`** moved from `src/pages/` into `src/e-commerce-store/` to sit alongside the other store pages.
+- **`ContactForm.jsx`** is a new lightweight form — no heavy validation, minimal tokens, free-tier safe.
+- Backend controllers are stateless functions; the in-memory stores are clearly marked for Phase 2 DB replacement.

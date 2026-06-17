@@ -5,12 +5,15 @@
  * Phase 1: Rule-based avatar + static style suggestions
  * Phase 2: AI image analysis, smart color matching, personalized outfit scoring
  *          → Plug in at: getAIRecommendations() below
+ *
+ * NOTE: No fetch() calls here. All HTTP calls go through ../styles/api.js
  */
 
 import { useState, useCallback } from "react";
 import Avatar from "../components/Avatar";
 import ProductLinkForm from "../components/ProductLinkForm";
 import BodyControls from "../components/BodyControls";
+import { demoApi } from "../styles/api";
 
 // ─── Design tokens (match Veyra palette) ─────────────────────────────────────
 const INK      = "#0B0B0E";
@@ -24,7 +27,6 @@ function getRuleBasedAdvice({ bodyType, skinTone, height }) {
   const tips = [];
   const avoid = [];
 
-  // Body type rules
   if (bodyType === "slim") {
     tips.push("Layered outfits add visual volume — great for slim builds.");
     tips.push("Horizontal stripes work in your favour.");
@@ -46,7 +48,6 @@ function getRuleBasedAdvice({ bodyType, skinTone, height }) {
     tips.push("Classic straight-fit jeans + a tucked shirt is timeless.");
   }
 
-  // Skin tone color palette
   const palettes = {
     fair:  { good: ["Navy", "Burgundy", "Forest green", "Slate grey"], avoid: ["Neon yellow", "Pastel pink"] },
     light: { good: ["Earthy terracotta", "Olive", "Warm beige", "Rust orange"], avoid: ["Washed-out pastels"] },
@@ -57,7 +58,6 @@ function getRuleBasedAdvice({ bodyType, skinTone, height }) {
   tips.push(`Your skin tone pairs beautifully with: ${palette.good.join(", ")}.`);
   avoid.push(`Colors to use sparingly: ${palette.avoid.join(", ")}.`);
 
-  // Height rules
   if (height <= 3) {
     tips.push("High-waisted bottoms and monochrome outfits elongate your frame.");
     avoid.push("Avoid wide-leg trousers without heels — they shorten the leg line.");
@@ -101,22 +101,12 @@ export default function CheckDemo({ onNavigate }) {
   const advice = getRuleBasedAdvice(features);
   const filledCount = Object.values(links).filter(Boolean).length;
 
-  // Demo save (calls backend; no auth required in demo mode)
+  // Save via API service — no fetch() inside this component
   const handleSave = async () => {
     setSaving(true);
     try {
-      // POST /api/demo/save-links
-      await fetch("/api/demo/save-links", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ links }),
-      });
-      // POST /api/demo/save-user-features
-      await fetch("/api/demo/save-user-features", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ features }),
-      });
+      await demoApi.saveLinks(links);
+      await demoApi.saveUserFeatures(features);
       setSaved(true);
     } catch {
       // In demo mode without a running backend, gracefully continue
@@ -196,7 +186,7 @@ export default function CheckDemo({ onNavigate }) {
           </div>
         </section>
 
-        {/* Section 2+3: Avatar + Controls (2-col on desktop) */}
+        {/* Section 2+3: Avatar + Controls */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem" }}>
 
           {/* Avatar Panel */}
