@@ -5,6 +5,7 @@ import LandingPage from "./e-commerce-store/Landingpage";
 import AuthOnboarding from "./e-commerce-store/Authonboarding";
 import HomePage from "./e-commerce-store/Homepage";
 import CategoryPage from "./e-commerce-store/Category";
+import CheckDemo from "./pages/CheckDemo";
 
 function Landing() {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ function Home() {
   return (
     <HomePage
       onSelectCategory={(name) => navigate(`/category/${encodeURIComponent(name)}`)}
+      onCheckDemo={() => navigate("/check-demo")}
     />
   );
 }
@@ -36,6 +38,11 @@ function CategoryRoute() {
   );
 }
 
+function CheckDemoRoute() {
+  const navigate = useNavigate();
+  return <CheckDemo onNavigate={(page) => navigate(page === "home" ? "/home" : "/")} />;
+}
+
 function App() {
   return (
     <BrowserRouter>
@@ -44,6 +51,7 @@ function App() {
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/home" element={<Home />} />
         <Route path="/category/:name" element={<CategoryRoute />} />
+        <Route path="/check-demo" element={<CheckDemoRoute />} />
       </Routes>
     </BrowserRouter>
   );

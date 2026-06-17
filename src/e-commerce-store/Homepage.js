@@ -13,7 +13,7 @@ const CATEGORIES = [
   { name: "Watches", img: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=600&q=80" },
 ];
 
-export default function HomePage({ onSelectCategory = (c) => console.log("→ category:", c) }) {
+export default function HomePage({ onSelectCategory = (c) => console.log("→ category:", c), onCheckDemo = () => {} }) {
   const [hovered, setHovered] = useState(null);
 
   return (
@@ -29,6 +29,7 @@ export default function HomePage({ onSelectCategory = (c) => console.log("→ ca
           Veyra
         </span>
         <div className="flex items-center gap-6" style={{ color: PORCELAIN }}>
+          <button onClick={onCheckDemo} style={{ background: "rgba(201,162,39,0.12)", border: "1px solid rgba(201,162,39,0.4)", color: "#C9A227", borderRadius: "20px", padding: "0.3rem 0.9rem", fontSize: "0.72rem", cursor: "pointer", fontFamily: "Inter, sans-serif" }}>✦ AI Stylist</button>
           <Search size={18} className="cursor-pointer opacity-70 hover:opacity-100" />
           <User size={18} className="cursor-pointer opacity-70 hover:opacity-100" />
           <ShoppingBag size={18} className="cursor-pointer opacity-70 hover:opacity-100" />
