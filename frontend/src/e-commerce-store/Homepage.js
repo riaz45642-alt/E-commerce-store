@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, User, ShoppingBag } from "lucide-react";
+import StoreNav from "../components/StoreNav";
 
 const INK = "#0B0B0E";
 const PORCELAIN = "#F3EFE6";
@@ -24,17 +24,10 @@ export default function HomePage({ onSelectCategory = (c) => console.log("→ ca
         .cat-img { transition: transform 0.6s ease; }
       `}</style>
 
-      <nav className="w-full flex items-center justify-between px-6 md:px-14 py-6">
-        <span style={{ fontFamily: "Fraunces, serif", fontSize: "1.3rem", color: PORCELAIN, letterSpacing: "0.05em" }}>
-          Veyra
-        </span>
-        <div className="flex items-center gap-6" style={{ color: PORCELAIN }}>
-          <button onClick={onCheckDemo} style={{ background: "rgba(201,162,39,0.12)", border: "1px solid rgba(201,162,39,0.4)", color: "#C9A227", borderRadius: "20px", padding: "0.3rem 0.9rem", fontSize: "0.72rem", cursor: "pointer", fontFamily: "Inter, sans-serif" }}>✦ AI Stylist</button>
-          <Search size={18} className="cursor-pointer opacity-70 hover:opacity-100" />
-          <User size={18} className="cursor-pointer opacity-70 hover:opacity-100" />
-          <ShoppingBag size={18} className="cursor-pointer opacity-70 hover:opacity-100" />
-        </div>
-      </nav>
+      <StoreNav />
+      <div className="px-6 md:px-14 -mt-2 mb-2 flex justify-end">
+        <button onClick={onCheckDemo} style={{ background: "rgba(201,162,39,0.12)", border: "1px solid rgba(201,162,39,0.4)", color: "#C9A227", borderRadius: "20px", padding: "0.3rem 0.9rem", fontSize: "0.72rem", cursor: "pointer", fontFamily: "Inter, sans-serif" }}>✦ AI Stylist</button>
+      </div>
 
       <header className="px-6 md:px-14 pt-6 pb-10 text-center">
         <h1 style={{ fontFamily: "Fraunces, serif", fontSize: "clamp(1.8rem, 4vw, 2.6rem)", color: PORCELAIN, fontWeight: 400 }}>
