@@ -1,13 +1,13 @@
 /**
  * AdminPanel.js — Veyra Admin Panel (restricted to the store owner)
  * Gated by /api/admin/login; the issued token is sent as x-admin-token on
- * every product write request (see styles/api.js → adminHeaders()).
+ * every product write request (see logic/api.js → adminHeaders()).
  */
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Lock, Plus, Pencil, Trash2, Minus, LogOut, X } from "lucide-react";
-import { adminApi, productsApi } from "../styles/api";
+import { adminApi, productsApi } from "../logic/api";
 
 const INK = "#0B0B0E";
 const PORCELAIN = "#F3EFE6";

@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { CreditCard, Landmark, Wallet, Truck, Check } from "lucide-react";
 import StoreNav from "../components/StoreNav";
 import { useCart } from "../context/CartContext";
-import { productsApi } from "../styles/api";
+import { productsApi } from "../logic/api";
 
 const INK = "#0B0B0E";
 const PORCELAIN = "#F3EFE6";

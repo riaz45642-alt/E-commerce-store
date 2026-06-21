@@ -1,11 +1,11 @@
 /**
  * ContactForm.jsx — Veyra Contact / Feedback Form
  * Lightweight, minimal validation, free-tier safe.
- * Uses contactApi from styles/api.js — no fetch() inside this component.
+ * Uses contactApi from logic/api.js — no fetch() inside this component.
  */
 
 import { useState } from "react";
-import { contactApi } from "../styles/api";
+import { contactApi } from "../logic/api";
 
 const INK      = "#0B0B0E";
 const PORCELAIN= "#F3EFE6";

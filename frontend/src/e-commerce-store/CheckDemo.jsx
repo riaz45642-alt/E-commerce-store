@@ -6,14 +6,14 @@
  * Phase 2: AI image analysis, smart color matching, personalized outfit scoring
  *          → Plug in at: getAIRecommendations() below
  *
- * NOTE: No fetch() calls here. All HTTP calls go through ../styles/api.js
+ * NOTE: No fetch() calls here. All HTTP calls go through ../logic/api.js
  */
 
 import { useState, useCallback } from "react";
 import Avatar from "../components/Avatar";
 import ProductLinkForm from "../components/ProductLinkForm";
 import BodyControls from "../components/BodyControls";
-import { demoApi } from "../styles/api";
+import { demoApi } from "../logic/api";
 
 // ─── Design tokens (match Veyra palette) ─────────────────────────────────────
 const INK      = "#0B0B0E";

@@ -8,7 +8,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { X } from "lucide-react";
 import StoreNav from "../components/StoreNav";
-import { productsApi } from "../styles/api";
+import { productsApi } from "../logic/api";
 import { useCart } from "../context/CartContext";
 
 const INK = "#0B0B0E";
